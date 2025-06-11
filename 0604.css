@@ -1,0 +1,13 @@
+p {
+    color: blueviolet;
+    font-size: 25px;
+}
+
+a {
+    background-color: aquamarine;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20%;
+}
