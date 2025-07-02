@@ -4,25 +4,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>画像表示</title>
+    <title>フィルター効果サンプル</title>
     <style media="screen">
-        .blur img {
+        div {
+            border: #bbb 1px solid;
+        }
+
+        body {
+            gap: 20px;
+
+            width: 100%;
+        }
+
+        .div1 {
+            display: flex;
+            margin-bottom: 30px;
+        }
+
+        .div2 {
+            display: flex;
+            margin-bottom: 30px;
+        }
+
+        .div3 {
+            display: flex;
+            margin-bottom: 30px;
+        }
+
+        .div4 {
+            display: flex;
+        }
+
+
+        .blura img {
             filter: blur(5px);
+        }
+
+        .blurb img {
+            filter: blur(10px);
+        }
+
+        .blurc img {
+            filter: blur(30px);
+        }
+
+        .brightneesa img {
+            filter: brightness(50%);
+        }
+
+        .brightneesb img {
+            filter: brightness(100%);
+        }
+
+        .brightneesc img {
+            filter: brightness(200%);
+        }
+
+        .hue-rotateA img {
+            filter: hue-rotate(0deg);
+        }
+
+        .hue-rotateB img {
+            filter: hue-rotate(90deg);
+        }
+
+        .hue-rotateC img {
+            filter: hue-rotate(200deg);
+        }
+
+
+
+        .toon img {
+            filter: grayscale(100%);
+
         }
     </style>
 
 </head>
 
 <body>
-    <div class="blur">
-        <img src="./test_bg.png" alt="" width="500"><br>
-        ぼかし写真 : blur(30px)<br>
+    <div class="div1">
+        <div class="original">
+            <img src="./test_bg.png" alt="" width="300"><br>
+            オリジナル画像
+        </div>
+
+        <div class="blura">
+            <img src="./test_bg.png" alt="" width="300"><br>
+            明るさ : brightnees(5px)<br>
+        </div>
+        <div class="blurb">
+            <img src="./test_bg.png" alt="" width="300"><br>
+            ぼかし写真 : blur(10px)<br>
+        </div>
+
     </div>
 
-    <div class="original">
-        <img src="./test_bg.png" alt="" width="500"><br>
-        オリジナル画像
+    <div class="div2">
+        <div class="blurc">
+            <img src="./test_bg.png" alt="" width="300"><br>
+            ぼかし写真 : blur(30px)<br>
+        </div>
+        <div class="toon">
+            <img src="./test_bg.png" alt="" width="300"><br>
+            モノクロ画像
+        </div>
+
+        <div class="original">
+            <img src="./test_bg.png" alt="" width="300"><br>
+            オリジナル画像 明るさbrightnees:(100%)
+        </div>
+
+
+
     </div>
+
+    <div class="div3">
+        <div class="brightneesb">
+            <img src="./test_bg.png" alt="" width="300"><br>
+            明るさ:(100%)<br>
+        </div>
+
+        <div class="brightneesa">
+            <img src="./test_bg.png" alt="" width="300"><br>
+            明るさ:(50%)<br>
+        </div>
+
+        <div class="brightneesc">
+            <img src="./test_bg.png" alt="" width="300"><br>
+            明るさ:(200%)<br>
+        </div>
+    </div>
+
+    <div class="div4">
+        <div class="hue-rotateA">
+            <img src="./test_bg.png" alt="" width="300"><br>
+            色相:hue-rotate(0deg)<br>
+        </div>
+
+        <div class="hue-rotateB">
+            <img src="./test_bg.png" alt="" width="300"><br>
+            色相:hue-rotate(90deg)<br>
+        </div>
+
+        <div class="hue-rotateC">
+            <img src="./test_bg.png" alt="" width="300"><br>
+            色相:hue-rotate(200deg)<br>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
 
 
 </body>
