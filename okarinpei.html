@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ブロック崩し</title>
+    <style>
+        body {
+            background: #fafafa;
+        }
+
+        canvas {
+            display: block;
+            margin: 20px auto;
+            background: #bbb;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="500" height="320"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        // ボール
+        let ballX = canvas.width / 2;
+        let ballY = canvas.height - 30;
+        let ballR = 8;
+        let ballDX = 2;
+        let ballDY = -2;
+
+        // パドル
+        let paddleW = 70;
+        let paddleH = 10;
+        let paddleX = (canvas.width - paddleW) / 2;
+        let paddleSpeed = 6;
+        let right = false;
+        let left = false;
+
+        // ブロック
+        let row = 5;
+        let col = 4;
+        let bW = 70;
+        let bH = 18;
+        let space = 8;
+        let top = 30;
+        let leftM = 30;
+
+        let score = 0;
+        let lives = 3;
+
+        let bricks = [];
+        for (let i = 0; i < col; i++) {
+            bricks[i] = [];
+            for (let j = 0; j < row; j++) {
+                let bx = leftM + j * (bW + space);
+                let by = top + i * (bH + space);
+                bricks[i][j] = { x: bx, y: by, hit: true };
+            }
+        }
+
+        document.addEventListener("keydown", e => {
+            if (e.key === "ArrowRight") right = true;
+            if (e.key === "ArrowLeft") left = true;
+        });
+        document.addEventListener("keyup", e => {
+            if (e.key === "ArrowRight") right = false;
+            if (e.key === "ArrowLeft") left = false;
+        });
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(ballX, ballY, ballR, 0, Math.PI * 2);
+            ctx.fillStyle = "red";
+            ctx.fill();
+        }
+
+        function drawPaddle() {
+            ctx.fillStyle = "blue";
+            ctx.fillRect(paddleX, canvas.height - paddleH, paddleW, paddleH);
+        }
+
+        function drawBricks() {
+            ctx.fillStyle = "green";
+            for (let i = 0; i < col; i++) {
+                for (let j = 0; j < row; j++) {
+                    if (bricks[i][j].hit) {
+                        ctx.fillRect(bricks[i][j].x, bricks[i][j].y, bW, bH);
+                    }
+                }
+            }
+        }
+
+        function drawScore() {
+            ctx.font = "14px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText("Score: " + score, 8, 20);
+        }
+
+        function drawLives() {
+            ctx.font = "14px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText("Lives: " + lives, canvas.width - 70, 20);
+        }
+
+        function collision() {
+            for (let i = 0; i < col; i++) {
+                for (let j = 0; j < row; j++) {
+                    let b = bricks[i][j];
+                    if (b.hit) {
+                        if (ballX > b.x && ballX < b.x + bW && ballY > b.y && ballY < b.y + bH) {
+                            ballDY = -ballDY;
+                            b.hit = false;
+                            score++;
+                            if (score === row * col) {
+                                alert("クリア！");
+                                document.location.reload();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBricks();
+            drawBall();
+            drawPaddle();
+            drawScore();
+            drawLives();
+            collision();
+
+            // 壁
+            if (ballX + ballDX > canvas.width - ballR || ballX + ballDX < ballR) ballDX = -ballDX;
+            if (ballY + ballDY < ballR) ballDY = -ballDY;
+            else if (ballY + ballDY > canvas.height - ballR) {
+                if (ballX > paddleX && ballX < paddleX + paddleW) {
+                    ballDY = -ballDY;
+                } else {
+                    lives--;
+                    if (!lives) {
+                        alert("ゲームオーバー");
+                        document.location.reload();
+                    } else {
+                        ballX = canvas.width / 2;
+                        ballY = canvas.height - 30;
+                        ballDX = 2;
+                        ballDY = -2;
+                        paddleX = (canvas.width - paddleW) / 2;
+                    }
+                }
+            }
+
+            if (right && paddleX < canvas.width - paddleW) paddleX += paddleSpeed;
+            if (left && paddleX > 0) paddleX -= paddleSpeed;
+
+            ballX += ballDX;
+            ballY += ballDY;
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+
+</html>
